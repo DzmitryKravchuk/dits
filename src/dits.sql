@@ -26,6 +26,7 @@ CREATE TABLE `user_2_role`
 (
     `roleId` integer NOT NULL,
     `userId` integer NOT NULL,
+    PRIMARY KEY (`roleId`,`userId`),
     FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`) ON DELETE CASCADE,
     FOREIGN KEY (`userId`) REFERENCES `User` (`userId`) ON DELETE CASCADE
 );
