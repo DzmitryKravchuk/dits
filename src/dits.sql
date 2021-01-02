@@ -7,9 +7,7 @@ USE dits_test;
 CREATE TABLE `Role`
 (
     `roleId` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `user`   BINARY              NOT NULL,
-    `tutor`  BINARY              NOT NULL,
-    `admin`  BINARY              NOT NULL
+    `name`   varchar(255)        NOT NULL
 );
 
 CREATE TABLE `User`
@@ -26,7 +24,7 @@ CREATE TABLE `user_2_role`
 (
     `roleId` integer NOT NULL,
     `userId` integer NOT NULL,
-    PRIMARY KEY (`roleId`,`userId`),
+    PRIMARY KEY (`roleId`, `userId`),
     FOREIGN KEY (`roleId`) REFERENCES `Role` (`roleId`) ON DELETE CASCADE,
     FOREIGN KEY (`userId`) REFERENCES `User` (`userId`) ON DELETE CASCADE
 );
@@ -90,3 +88,37 @@ CREATE TABLE `Statistic`
     FOREIGN KEY (`questionId`) REFERENCES `Question` (`questionId`) ON DELETE CASCADE,
     FOREIGN KEY (`userId`) REFERENCES `User` (`userId`) ON DELETE CASCADE
 );
+
+LOCK TABLES `topic` WRITE;
+INSERT INTO `topic`
+VALUES (1, 'First topic', 'First topic'),
+       (2, 'Second topic', 'Second topic');
+UNLOCK TABLES;
+
+LOCK TABLES `test` WRITE;
+INSERT INTO `test`
+VALUES (1, 'First test', 'First test', '1'),
+       (2, 'Second test', 'Second test', '2');
+UNLOCK TABLES;
+
+LOCK TABLES `role` WRITE;
+INSERT INTO `role`
+VALUES (1, 'admin'),
+       (2, 'tutor'),
+       (3, 'user');
+UNLOCK TABLES;
+
+LOCK TABLES `user` WRITE;
+INSERT INTO `user`
+VALUES (1, 'Name1', 'SurName1', 'login1', 'pass1','admin'),
+       (2, 'Name2', 'SurName2', 'login2', 'pass2','tutor'),
+       (3, 'Name3', 'SurName3', 'login3', 'pass3','user');
+UNLOCK TABLES;
+
+LOCK TABLES `user_2_role` WRITE;
+INSERT INTO `user_2_role`
+VALUES (1, 1),
+       (2, 2),
+       (3, 3);
+UNLOCK TABLES;
+
