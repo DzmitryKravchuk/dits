@@ -1,6 +1,7 @@
 package devinc.dits.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -39,6 +40,19 @@ public class User{
                 ", password='" + password + '\'' +
                 ", roleList=" + roleList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return UserId == user.UserId && firstName.equals(user.firstName) && lastName.equals(user.lastName) && login.equals(user.login) && password.equals(user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(UserId);
     }
 
     public int getUserId() {

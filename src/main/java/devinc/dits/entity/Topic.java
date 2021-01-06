@@ -2,6 +2,7 @@ package devinc.dits.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Topic {
@@ -25,6 +26,19 @@ public class Topic {
                 ", description='" + description + '\'' +
                 ", tests=" + tests +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Topic topic = (Topic) o;
+        return topicId == topic.topicId && name.equals(topic.name) && description.equals(topic.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(topicId);
     }
 
     public int getTopicId() {

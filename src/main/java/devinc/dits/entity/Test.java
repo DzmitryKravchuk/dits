@@ -1,6 +1,7 @@
 package devinc.dits.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Test {
@@ -25,6 +26,19 @@ public class Test {
                 ", description='" + description + '\'' +
                 ", topicId=" + topic.getTopicId() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Test test = (Test) o;
+        return testId == test.testId && name.equals(test.name) && description.equals(test.description) && topic.equals(test.topic);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(testId);
     }
 
     public int getTestId() {

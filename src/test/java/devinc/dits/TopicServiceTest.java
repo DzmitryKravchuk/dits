@@ -19,7 +19,7 @@ import java.util.List;
 @WebAppConfiguration
 @PropertySource("classpath:db.properties")
 @PropertySource(value = "classpath:db.properties")
-public class TopicRepositoryTest extends AbstractTestNGSpringContextTests {
+public class TopicServiceTest extends AbstractTestNGSpringContextTests {
 
     private TopicService topicService;
 
@@ -29,18 +29,37 @@ public class TopicRepositoryTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void showAll() {
-        List<Topic> list =topicService.findAll();
-        assert (list.size()==2);
-        for (Topic q : topicService.findAll()) {
-               //         System.out.println(q);
+    public void createTopic() {
+        Topic q;
+        Topic qFromBase;
+
+        q = new Topic();
+        q.setDescription("desc");
+        q.setName("name");
+        topicService.save(q);  // save
+
+        List<Topic> list = topicService.findAll(); // findAll
+        int list1Size = list.size();
+
+        for (Topic t : list
+        ) {
+            if (t.getName().equals(q.getName())){
+                q.setTopicId(t.getTopicId());
+            }
         }
+        qFromBase = topicService.getById(q.getTopicId()); //get
+        assert (q.equals(qFromBase));
+
+        q.setName("new name");
+        topicService.update(q); //update
+        qFromBase = topicService.getById(q.getTopicId()); //get2
+        assert (q.equals(qFromBase));
+
+        topicService.delete(q);
+        list = topicService.findAll(); // findAll2
+        int list2Size = list.size();
+        assert (list1Size == list2Size+1);
+
     }
 
-    @Test
-    public void findById() {
-        Topic q = topicService.getById(2);
-        assert (q!=null);
-  //      System.out.println(q);
-    }
 }
