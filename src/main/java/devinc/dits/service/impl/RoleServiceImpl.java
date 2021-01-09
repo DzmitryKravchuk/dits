@@ -1,8 +1,8 @@
 package devinc.dits.service.impl;
 
-import devinc.dits.entity.Topic;
-import devinc.dits.repository.TopicRepository;
-import devinc.dits.service.TopicService;
+import devinc.dits.entity.Role;
+import devinc.dits.repository.RoleRepository;
+import devinc.dits.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,41 +10,41 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class TopicServiceImpl implements TopicService {
-    TopicRepository repository;
+public class RoleServiceImpl implements RoleService {
+    RoleRepository repository;
 
     @Autowired
-    public void setRepository(TopicRepository repository) {
+    public void setRepository(RoleRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
     @Override
-    public List<Topic> findAll() {
-        return repository.findAll(Topic.class);
+    public List<Role> findAll() {
+        return repository.findAll(Role.class);
     }
 
     @Transactional
     @Override
-    public void update(Topic t) {
+    public void update(Role t) {
         repository.update(t);
     }
 
     @Transactional
     @Override
-    public void delete(Topic t) {
+    public void delete(Role t) {
         repository.delete(t);
     }
 
     @Transactional
     @Override
-    public void save(Topic t) {
+    public void save(Role t) {
         repository.save(t);
     }
 
     @Transactional
     @Override
-    public Topic getById(int id) {
-        return repository.getById(Topic.class, id);
+    public Role getById(int id) {
+        return repository.getById(Role.class, id);
     }
 }

@@ -16,5 +16,4 @@ public interface TopicService {
 
     Topic getById(int id);
 
-
 }

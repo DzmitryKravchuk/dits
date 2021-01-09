@@ -9,7 +9,7 @@ public class User{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int UserId;
+    private int userId;
 
     @Column
     private String firstName;
@@ -33,7 +33,7 @@ public class User{
     @Override
     public String toString() {
         return "User{" +
-                "UserId=" + UserId +
+                "UserId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", login='" + login + '\'' +
@@ -47,20 +47,20 @@ public class User{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return UserId == user.UserId && firstName.equals(user.firstName) && lastName.equals(user.lastName) && login.equals(user.login) && password.equals(user.password);
+        return userId == user.userId && firstName.equals(user.firstName) && lastName.equals(user.lastName) && login.equals(user.login) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(UserId);
+        return Objects.hash(userId);
     }
 
     public int getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(int userId) {
-        UserId = userId;
+        userId = userId;
     }
 
     public String getFirstName() {

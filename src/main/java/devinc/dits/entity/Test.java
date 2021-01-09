@@ -33,7 +33,7 @@ public class Test {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Test test = (Test) o;
-        return testId == test.testId && name.equals(test.name) && description.equals(test.description) && topic.equals(test.topic);
+        return testId == test.testId && name.equals(test.name) && description.equals(test.description) && topic.getTopicId()==test.getTopic().getTopicId();
     }
 
     @Override

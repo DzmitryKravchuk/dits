@@ -1,8 +1,8 @@
 package devinc.dits.service.impl;
 
-import devinc.dits.entity.Topic;
-import devinc.dits.repository.TopicRepository;
-import devinc.dits.service.TopicService;
+import devinc.dits.entity.User;
+import devinc.dits.repository.UserRepository;
+import devinc.dits.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,41 +10,41 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class TopicServiceImpl implements TopicService {
-    TopicRepository repository;
+public class UserServiceImpl implements UserService {
+    UserRepository repository;
 
     @Autowired
-    public void setRepository(TopicRepository repository) {
+    public void setRepository(UserRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
     @Override
-    public List<Topic> findAll() {
-        return repository.findAll(Topic.class);
+    public List<User> findAll() {
+        return repository.findAll(User.class);
     }
 
     @Transactional
     @Override
-    public void update(Topic t) {
+    public void update(User t) {
         repository.update(t);
     }
 
     @Transactional
     @Override
-    public void delete(Topic t) {
+    public void delete(User t) {
         repository.delete(t);
     }
 
     @Transactional
     @Override
-    public void save(Topic t) {
+    public void save(User t) {
         repository.save(t);
     }
 
     @Transactional
     @Override
-    public Topic getById(int id) {
-        return repository.getById(Topic.class, id);
+    public User getById(int id) {
+        return repository.getById(User.class, id);
     }
 }
