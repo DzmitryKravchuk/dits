@@ -1,6 +1,5 @@
 package devinc.dits.service;
 
-
 import devinc.dits.entity.Topic;
 
 import java.util.List;

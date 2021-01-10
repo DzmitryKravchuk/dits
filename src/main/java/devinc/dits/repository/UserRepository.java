@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository implements DaoRepos<User> {
+
     private SessionFactory sessionFactory;
 
     @Autowired

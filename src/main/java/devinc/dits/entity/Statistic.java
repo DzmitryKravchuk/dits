@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
 public class Statistic {
     @Id
     @Column
@@ -17,11 +18,11 @@ public class Statistic {
     private boolean correct;
 
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "questionId`")
+    @JoinColumn(name = "questionId")
     Question question;
 
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId`")
+    @JoinColumn(name = "userId")
     User user;
 
     @Override

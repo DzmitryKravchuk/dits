@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TopicRepository implements DaoRepos<Topic>{
+public class TopicRepository implements DaoRepos<Topic> {
 
-    private  SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
