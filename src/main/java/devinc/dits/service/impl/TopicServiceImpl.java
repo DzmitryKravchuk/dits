@@ -1,5 +1,6 @@
 package devinc.dits.service.impl;
 
+import devinc.dits.entity.Test;
 import devinc.dits.entity.Topic;
 import devinc.dits.repository.TopicRepository;
 import devinc.dits.service.TopicService;
@@ -46,5 +47,17 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public Topic getById(int id) {
         return repository.getById(Topic.class, id);
+    }
+
+    @Transactional
+    @Override
+    public List<Test> getTestsByTopic(int topicId) {
+        return repository.getTestsByTopic(topicId);
+    }
+
+    @Transactional
+    @Override
+    public Topic getByTopicName(String topic) {
+        return repository.getByTopicName(topic);
     }
 }

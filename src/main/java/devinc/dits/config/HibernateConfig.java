@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "devinc.dits")
+@ComponentScan(basePackages = "devinc.dits") //{"devinc.dits.service","devinc.dits.entity","devinc.dits.repository"}
 @EnableTransactionManagement
 @PropertySource(value = "classpath:db.properties")
 public class HibernateConfig {

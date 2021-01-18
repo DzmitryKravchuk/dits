@@ -1,6 +1,8 @@
 package devinc.dits.service;
 
+import devinc.dits.entity.Test;
 import devinc.dits.entity.Topic;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,4 +17,7 @@ public interface TopicService {
 
     Topic getById(int id);
 
+    List<Test> getTestsByTopic(int topicId);
+
+    Topic getByTopicName(String topic);
 }

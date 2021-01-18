@@ -60,6 +60,7 @@ public class StatisticServiceTest extends AbstractTestNGSpringContextTests {
         }
 
         qFromBase = statisticService.getById(q.getStatisticId()); //get
+        assert(qFromBase!=null);
         assert (q.equals(qFromBase));
 
         q.setCorrect(false);

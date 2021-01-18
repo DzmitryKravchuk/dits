@@ -5,6 +5,8 @@ import devinc.dits.config.WebConfig;
 import devinc.dits.entity.Topic;
 import devinc.dits.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,6 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ComponentScan(basePackages = "devinc.dits")
 @ContextConfiguration(classes = {WebConfig.class, HibernateConfig.class})
@@ -20,13 +23,8 @@ import java.util.List;
 @PropertySource("classpath:db.properties")
 @PropertySource(value = "classpath:db.properties")
 public class TopicServiceTest extends AbstractTestNGSpringContextTests {
-
-    private TopicService topicService;
-
     @Autowired
-    public void setTopicService(TopicService topicService) {
-        this.topicService = topicService;
-    }
+    private TopicService topicService;
 
     @Test
     public void createTopic() {
@@ -35,18 +33,16 @@ public class TopicServiceTest extends AbstractTestNGSpringContextTests {
 
         q = new Topic();
         q.setDescription("desc");
-        q.setName("name");
+        String topicName = "topicName";
+        q.setName(topicName);
         topicService.save(q);  // save
 
         List<Topic> list = topicService.findAll(); // findAll
         int list1Size = list.size();
 
-        for (Topic t : list
-        ) {
-            if (t.getName().equals(q.getName())){
-                q.setTopicId(t.getTopicId());
-            }
-        }
+        qFromBase = topicService.getByTopicName(topicName);
+        assert (q.getDescription().equals(qFromBase.getDescription()));
+
         qFromBase = topicService.getById(q.getTopicId()); //get
         assert (q.equals(qFromBase));
 
@@ -58,8 +54,12 @@ public class TopicServiceTest extends AbstractTestNGSpringContextTests {
         topicService.delete(q);
         list = topicService.findAll(); // findAll2
         int list2Size = list.size();
-        assert (list1Size == list2Size+1);
+        assert (list1Size == list2Size + 1);
 
+        Topic t = topicService.getByTopicName("Java core");
+        List<devinc.dits.entity.Test> tList = topicService.getTestsByTopic(t.getTopicId());
+        List<String> lis= tList.stream().map((test)->test.getName()).collect(Collectors.toList());
+        System.out.println(lis);
     }
 
 }
