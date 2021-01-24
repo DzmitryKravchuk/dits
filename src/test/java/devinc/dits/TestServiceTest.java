@@ -2,6 +2,7 @@ package devinc.dits;
 
 import devinc.dits.config.HibernateConfig;
 import devinc.dits.config.WebConfig;
+import devinc.dits.entity.Question;
 import devinc.dits.entity.Topic;
 import devinc.dits.service.TestService;
 import devinc.dits.service.TopicService;
@@ -38,21 +39,18 @@ public class TestServiceTest extends AbstractTestNGSpringContextTests {
         topic.setTopicId(1);
 
 
-        q = new devinc.dits.entity.Test();
-        q.setDescription("desc");
-        q.setName("name");
-        q.setTopic(topic);
-        testService.save(q);  // save
+        String testName = "New Test Name";
+        q = testService.createTestByName(testName,topic);
 
         List<devinc.dits.entity.Test> list = testService.findAll(); // findAll
         int list1Size = list.size();
 
-        for (devinc.dits.entity.Test t : list
-        ) {
-            if (t.getName().equals(q.getName())) {
-                q.setTestId(t.getTestId());
-            }
-        }
+ //       for (devinc.dits.entity.Test t : list
+  //      ) {
+  //          if (t.getName().equals(q.getName())) {
+  //              q.setTestId(t.getTestId());
+   //         }
+  //      }
 
         qFromBase = testService.getById(q.getTestId()); //get
         assert (q.equals(qFromBase));
@@ -66,5 +64,8 @@ public class TestServiceTest extends AbstractTestNGSpringContextTests {
         list = testService.findAll(); // findAll2
         int list2Size = list.size();
         assert (list1Size == list2Size + 1);
+
+        List<Question> listQ = testService.getQuestionsByTest("Java core test");
+        System.out.println(listQ);
     }
 }

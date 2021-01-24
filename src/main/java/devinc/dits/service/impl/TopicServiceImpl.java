@@ -60,4 +60,24 @@ public class TopicServiceImpl implements TopicService {
     public Topic getByTopicName(String topic) {
         return repository.getByTopicName(topic);
     }
+
+    @Transactional
+    @Override
+    public Topic createTopicByName(String topicName) {
+        Topic newTopic = new Topic();
+        List<Topic> l = findAll();
+        for (Topic t : l){
+            if (topicName.equals(t.getName())){
+                newTopic.setTopicId(t.getTopicId());
+                newTopic.setName(t.getName());
+                newTopic.setDescription(t.getDescription());
+                return newTopic;
+            }
+        }
+        newTopic.setName(topicName);
+        newTopic.setDescription(topicName);
+        save(newTopic);
+
+        return newTopic;
+    }
 }

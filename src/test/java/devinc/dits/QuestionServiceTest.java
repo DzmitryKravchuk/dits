@@ -2,6 +2,7 @@ package devinc.dits;
 
 import devinc.dits.config.HibernateConfig;
 import devinc.dits.config.WebConfig;
+import devinc.dits.entity.Answer;
 import devinc.dits.entity.Question;
 import devinc.dits.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,21 +36,14 @@ public class QuestionServiceTest extends AbstractTestNGSpringContextTests {
         devinc.dits.entity.Test test = new devinc.dits.entity.Test();
         test.setTestId(1);
 
-        q = new Question();
-        q.setDescription("desc");
-        q.setTest(test);
+        String questionName = "New Question Description";
+
+        q = questionService.createQuestionByDescription(questionName, test);
 
         questionService.save(q);  // save
 
         List<Question> list = questionService.findAll(); // findAll
         int list1Size = list.size();
-
-        for (Question t : list) {
-            if (t.getTest().getTestId() == q.getTest().getTestId()
-                    && t.getDescription().equals(q.getDescription())) {
-                q.setQuestionId(t.getQuestionId());
-            }
-        }
 
         qFromBase = questionService.getById(q.getQuestionId()); //get
         assert (qFromBase != null);
@@ -64,5 +58,8 @@ public class QuestionServiceTest extends AbstractTestNGSpringContextTests {
         list = questionService.findAll(); // findAll2
         int list2Size = list.size();
         assert (list1Size == list2Size + 1);
+
+        List<Answer> listA = questionService.getAnswersByQuestion(1);
+        System.out.println(listA);
     }
 }

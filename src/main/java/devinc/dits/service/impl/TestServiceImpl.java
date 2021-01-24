@@ -1,6 +1,8 @@
 package devinc.dits.service.impl;
 
+import devinc.dits.entity.Question;
 import devinc.dits.entity.Test;
+import devinc.dits.entity.Topic;
 import devinc.dits.repository.TestRepository;
 import devinc.dits.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,33 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test getById(int id) {
         return repository.getById(Test.class, id);
+    }
+
+    @Transactional
+    @Override
+    public List<Question> getQuestionsByTest(String testName) {
+        Test test = repository.getByTestName(testName);
+        return repository.getQuestionsByTest(test.getTestId());
+    }
+
+    @Transactional
+    @Override
+    public Test createTestByName(String testName, Topic topic) {
+        Test newTest = new Test();
+        List <Test> l = findAll();
+        for (Test t : l){
+            if (testName.equals(t.getName())){
+                newTest.setTestId(t.getTestId());
+                newTest.setName(t.getName());
+                newTest.setDescription(t.getDescription());
+                return newTest;
+            }
+        }
+        newTest.setName(testName);
+        newTest.setDescription(testName);
+        newTest.setTopic(topic);
+        save(newTest);
+
+        return newTest;
     }
 }

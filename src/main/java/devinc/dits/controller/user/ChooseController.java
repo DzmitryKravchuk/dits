@@ -28,9 +28,9 @@ public class ChooseController {
         return tList.stream().map((test) -> test.getName()).collect(Collectors.toList());
     }
 
-    @GetMapping(value = "/goTest")
-    public String gpTest() {
-        return "User/testPage";
-    }
+    //@GetMapping(value = "/goTest")
+    //public String goTest() {
+    //    return "User/testPage";
+   // }
 
 }

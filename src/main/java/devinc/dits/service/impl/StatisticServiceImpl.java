@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StatisticServiceImpl implements StatisticService {
@@ -48,4 +51,5 @@ public class StatisticServiceImpl implements StatisticService {
     public Statistic getById(int id) {
         return repository.getById(Statistic.class, id);
     }
+
 }

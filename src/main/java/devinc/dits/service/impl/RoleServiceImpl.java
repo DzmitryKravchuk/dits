@@ -47,4 +47,10 @@ public class RoleServiceImpl implements RoleService {
     public Role getById(int id) {
         return repository.getById(Role.class, id);
     }
+
+    @Transactional
+    @Override
+    public Role getRoleByName(String roleName) {
+        return repository.getRoleByName(roleName);
+    }
 }

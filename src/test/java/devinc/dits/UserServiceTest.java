@@ -4,6 +4,7 @@ import devinc.dits.config.HibernateConfig;
 import devinc.dits.config.WebConfig;
 import devinc.dits.entity.Role;
 import devinc.dits.entity.User;
+import devinc.dits.service.RoleService;
 import devinc.dits.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,10 +25,16 @@ import java.util.List;
 public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     private UserService userService;
+    private RoleService roleService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     @Test
@@ -51,6 +58,11 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         q.setPassword("1111");
         q.setRoleList(set);
         userService.save(q);  // save
+
+        Role roleFromBase1 = roleService.getRoleByName("admin");
+        Role roleFromBase2 = roleService.getById(1);
+        assert(roleFromBase1.equals(roleFromBase2));
+
 
         List<User> list = userService.findAll(); // findAll
         int list1Size = list.size();

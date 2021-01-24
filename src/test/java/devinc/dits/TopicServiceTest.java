@@ -31,11 +31,9 @@ public class TopicServiceTest extends AbstractTestNGSpringContextTests {
         Topic q;
         Topic qFromBase;
 
-        q = new Topic();
-        q.setDescription("desc");
-        String topicName = "topicName";
-        q.setName(topicName);
-        topicService.save(q);  // save
+        String topicName="My new Topic";
+        q = topicService.createTopicByName(topicName);  // save
+        System.out.println("Id= "+q.getTopicId());
 
         List<Topic> list = topicService.findAll(); // findAll
         int list1Size = list.size();

@@ -1,19 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="from" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
-    <title>"CreateUser"</title>
+    <title>CreateUser</title>
 </head>
 <body>
 <div class="CreateUser">
     <form:form method="post" action="/createUser" modelAttribute="user">
+
+        <c:forEach items="${roles}" var="role">
+            <input type="checkbox" name="chosenRole" value="${role.name}">${role.name}<br>
+        </c:forEach>
+
         <table>
-            <tr>
-                <td><form:select path="roleName"><form:options items="${allRoles}"/>
-                </form:select></td>
-            </tr>
             <tr>
                 <td><form:input path="lastName" placeholder="Фамилия" required="true"/></td>
             </tr>
@@ -39,9 +40,9 @@
     </form:form>
 </div>
 <script>
-    setTimeout(function (){
-        document.getElementById("success").style.display='none';
-    },4000)
+    setTimeout(function () {
+        document.getElementById("success").style.display = 'none';
+    }, 4000)
 </script>
 <br>
 <form action="/goHomeAdmin">

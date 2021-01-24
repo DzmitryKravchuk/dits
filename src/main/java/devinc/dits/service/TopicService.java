@@ -20,4 +20,6 @@ public interface TopicService {
     List<Test> getTestsByTopic(int topicId);
 
     Topic getByTopicName(String topic);
+
+    Topic createTopicByName(String topicName);
 }

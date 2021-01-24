@@ -127,20 +127,32 @@ LOCK TABLES `question` WRITE;
 INSERT INTO `question`
 VALUES (1, 'What do you know about arrays & primitive types', '1'),
        (2, 'What is autoboxing', '1'),
-       (3, 'What kinds of arrays exist', '1'),
-       (4, 'What kind of interfaces JCF contains', '2'),
-       (5, 'What is the difference between ArrayList & LinkedList', '2'),
-       (6, 'Why doesnt Collection include Map-interface', '2');
+       (3, 'What kind of interfaces JCF contains', '2'),
+       (4, 'What is the difference between ArrayList & LinkedList', '2');
+UNLOCK TABLES;
+
+LOCK TABLES `answer` WRITE;
+INSERT INTO `answer`
+VALUES (1, 'Массив представляет собой набор данных определенного типа', true, '1'),
+       (2, 'Массив это второе название коллекции', false, '1'),
+       (3, 'Размер массива можно менять', false, '1'),
+       (4, 'Autoboxing - представляет собой автоматическое приведение примитивного типа к классу оболочке', true, '2'),
+       (5, 'Autoboxing - пример {Integer a = new Integer (2); int i=1+a}', false, '2'),
+       (6, 'Autoboxing не возможно с типом char-Character', false, '2'),
+       (7, 'List, Set, Queue', true, '3'),
+       (8, 'Map, Container, SortedContainer', false, '3'),
+       (9, 'String, StringBuffer, StringBuilder', false, '3'),
+       (10, 'ArrayList - строится на основе массива,LinkedList - двусвязанный список', true, '4'),
+       (11, 'ArrayList - потокобезопасный,LinkedList - непотокобезопасный', false, '4'),
+       (12, 'ArrayList и LinkedList два названия для одного списка', false, '4');
 UNLOCK TABLES;
 
 LOCK TABLES `literature` WRITE;
 INSERT INTO `literature`
 VALUES (1, 'About arrays & primitive types', '1'),
        (2, 'About autoboxing', '2'),
-       (3, 'About kinds of arrays', '3'),
-       (4, 'About kinds of interfaces JCF contains', '4'),
-       (5, 'About ArrayList & LinkedList', '5'),
-       (6, 'About Map-interface', '6');
+       (3, 'About kinds of interfaces JCF contains', '3'),
+       (4, 'About ArrayList & LinkedList', '4');
 UNLOCK TABLES;
 
 LOCK TABLES `link` WRITE;
@@ -148,8 +160,6 @@ INSERT INTO `link`
 VALUES (1, 'https://docs.google.com/document/linc1', '1'),
        (2, 'https://docs.google.com/document/linc2', '2'),
        (3, 'https://docs.google.com/document/linc3', '3'),
-       (4, 'https://docs.google.com/document/linc4', '4'),
-       (5, 'https://docs.google.com/document/linc5', '5'),
-       (6, 'https://docs.google.com/document/linc6', '6');
+       (4, 'https://docs.google.com/document/linc4', '4');
 UNLOCK TABLES;
 

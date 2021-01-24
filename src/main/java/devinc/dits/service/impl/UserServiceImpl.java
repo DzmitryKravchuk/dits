@@ -1,5 +1,6 @@
 package devinc.dits.service.impl;
 
+import devinc.dits.entity.Role;
 import devinc.dits.entity.User;
 import devinc.dits.repository.UserRepository;
 import devinc.dits.service.UserService;
@@ -47,4 +48,5 @@ public class UserServiceImpl implements UserService {
     public User getById(int id) {
         return repository.getById(User.class, id);
     }
+
 }
