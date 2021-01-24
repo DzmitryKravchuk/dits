@@ -25,6 +25,12 @@ public class HomeController {
         return "User/user";
     }
 
+    @GetMapping(value = "/tutor")
+    public String tutorPage(ModelMap model) {
+        model.addAttribute("user", getPrincipal());
+        return "Tutor/tutor";
+    }
+
     @GetMapping(value = "/login")
     public String loginPage() {
         return "login";

@@ -34,19 +34,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
 
 //    @Autowired
- //   public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder).usersByUsernameQuery("select login, password, roleId from user where login=?").authoritiesByUsernameQuery("select login, nameRole from user where login=?");
-//    }
+//   public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder).usersByUsernameQuery("select login, password, userId from user where login=?").authoritiesByUsernameQuery("select login from user where login=?");
+//   }
 
     //////////////////логин и пароль записаны вручную для тестирования
-       @Autowired
-       public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-          auth.inMemoryAuthentication()
-                   .passwordEncoder(passwordEncoder)
-                   .withUser("user").password(passwordEncoder.encode("user")).roles("USER").
-                  and()
-                   .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN");
-       }
+    @Autowired
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .passwordEncoder(passwordEncoder)
+                .withUser("user").password(passwordEncoder.encode("user")).roles("USER").
+                and()
+                .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").
+                and()
+                .withUser("tutor").password(passwordEncoder.encode("tutor")).roles("TUTOR");
+    }
     /////////////////
 
     @Override
@@ -54,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/home").access("hasRole('USER')")
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .antMatchers("/tutor**").access("hasRole('TUTOR')")
                 .and().formLogin().loginPage("/login").successHandler(customSuccessHandler)
                 .usernameParameter("ssoId").passwordParameter("password")
                 .and().csrf()
