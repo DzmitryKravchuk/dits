@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Repository
 public class QuestionRepository implements DaoRepos<Question> {
-    public static final String SQL_SELECT_FULL_INFO_BY_ID = "SELECT q.questionId, q.description as qdescription, testId, lit.literatureId, lit.description as litdescription, link.linkId, link FROM question q, literature lit, link link WHERE q.questionId=? and q.questionId=lit.questionId and lit.literatureId=link.literatureId";
+    public static final String SQL_SELECT_QUESTION_LITERATURE_BY_ID = "SELECT q.questionId, q.description as qdescription, testId, lit.literatureId, lit.description as litdescription, link.linkId, link FROM question q, literature lit, link link WHERE q.questionId=? and q.questionId=lit.questionId and lit.literatureId=link.literatureId";
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -45,7 +45,7 @@ public class QuestionRepository implements DaoRepos<Question> {
         question.setQuestionId(id);
         Set<Literature> literatureSet = new HashSet<>();
         Session session = sessionFactory.getCurrentSession();
-        Query q = session.createNativeQuery(SQL_SELECT_FULL_INFO_BY_ID);
+        Query q = session.createNativeQuery(SQL_SELECT_QUESTION_LITERATURE_BY_ID);
         q.setParameter(1, id);
         List<Object[]> qResultList = q.getResultList();
         for (Object[] a : qResultList) {
@@ -69,7 +69,7 @@ public class QuestionRepository implements DaoRepos<Question> {
         }
         question.setLiteratureSet(literatureSet);
 
-
         return question;
     }
+
 }

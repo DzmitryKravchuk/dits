@@ -24,4 +24,5 @@ public interface QuestionService {
     Question getQuestionByDescription(String questionDescription);
 
     Question getFullInfoById(int id);
+
 }

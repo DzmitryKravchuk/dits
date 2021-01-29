@@ -86,4 +86,5 @@ public class QuestionServiceImpl implements QuestionService {
     public Question getFullInfoById(int id) {
         return repository.getFullInfoById(id);
     }
+
 }

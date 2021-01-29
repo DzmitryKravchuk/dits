@@ -69,4 +69,10 @@ public class StatisticServiceImpl implements StatisticService {
         return repository.getById(Statistic.class, id);
     }
 
+    @Transactional
+    @Override
+    public List<Statistic> getByUserId(int userId) {
+        return repository.getByUserId(userId);
+    }
+
 }

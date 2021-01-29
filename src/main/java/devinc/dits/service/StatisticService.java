@@ -16,4 +16,5 @@ public interface StatisticService {
 
     Statistic getById(int id);
 
+    List<Statistic> getByUserId (int userId);
 }

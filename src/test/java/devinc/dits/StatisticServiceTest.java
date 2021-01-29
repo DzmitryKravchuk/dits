@@ -53,14 +53,14 @@ public class StatisticServiceTest extends AbstractTestNGSpringContextTests {
 
         for (Statistic t : list
         ) {
-            if (t.getQuestion().getQuestionId()==q.getQuestion().getQuestionId()
-                    &&t.getUser().getUserId()==q.getUser().getUserId() ) {
+            if (t.getQuestion().getQuestionId() == q.getQuestion().getQuestionId()
+                    && t.getUser().getUserId() == q.getUser().getUserId()) {
                 q.setStatisticId(t.getStatisticId());
             }
         }
 
         qFromBase = statisticService.getById(q.getStatisticId()); //get
-        assert(qFromBase!=null);
+        assert (qFromBase != null);
         assert (q.equals(qFromBase));
 
         q.setCorrect(false);
@@ -73,5 +73,15 @@ public class StatisticServiceTest extends AbstractTestNGSpringContextTests {
         int list2Size = list.size();
         assert (list1Size == list2Size + 1);
 
+        List<Statistic> statList = statisticService.getByUserId(4);
+        int i = 1;
+        for (Statistic stat : statList) {
+            System.out.println("Statistic Number: "+ i +" - "+stat);
+            System.out.println(stat.getUser());
+            System.out.println(stat.getQuestion());
+            System.out.println(stat.getQuestion().getTest());
+            System.out.println(".........................");
+            i++;
+        }
     }
 }
