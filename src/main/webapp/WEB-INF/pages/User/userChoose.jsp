@@ -30,7 +30,7 @@
         $("#themes").change(function (event) {
             $.ajax({
                 url: "/userChoose",
-                type: "GET",
+                type: "POST",
                 dataType: "json",
                 data: {topic: $(event.target).val()},
             })

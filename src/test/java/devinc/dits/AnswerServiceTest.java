@@ -45,26 +45,20 @@ public class AnswerServiceTest extends AbstractTestNGSpringContextTests {
         List<Answer> list = answerService.findAll(); // findAll
         int list1Size = list.size();
 
-        for (Answer t : list) {
-            if (t.getQuestion().getQuestionId()==q.getQuestion().getQuestionId()
-                    &&t.getDescription().equals(q.getDescription()) ) {
-                q.setAnswerId(t.getAnswerId());
-            }
+        qFromBase = answerService.getByDescription("desc"); //get
+        assert (qFromBase != null);
+        assert (q.equals(qFromBase));
 
-            qFromBase = answerService.getById(q.getAnswerId()); //get
-            assert(qFromBase!=null);
-            assert (q.equals(qFromBase));
+        q.setCorrect(false);
+        answerService.update(q); //update
+        qFromBase = answerService.getById(q.getAnswerId()); //get2
+        assert (q.equals(qFromBase));
 
-            q.setCorrect(false);
-            answerService.update(q); //update
-            qFromBase = answerService.getById(q.getAnswerId()); //get2
-            assert (q.equals(qFromBase));
+        answerService.delete(q);
+        list = answerService.findAll(); // findAll2
+        int list2Size = list.size();
+        assert (list1Size == list2Size + 1);
 
-            answerService.delete(q);
-            list = answerService.findAll(); // findAll2
-            int list2Size = list.size();
-            assert (list1Size == list2Size + 1);
-
-        }
     }
 }
+

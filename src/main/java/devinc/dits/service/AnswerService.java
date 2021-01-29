@@ -15,4 +15,6 @@ public interface AnswerService {
     void save(Answer t);
 
     Answer getById(int id);
+
+    Answer getByDescription(String chosenAnswer);
 }

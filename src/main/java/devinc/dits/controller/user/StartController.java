@@ -1,5 +1,6 @@
 package devinc.dits.controller.user;
 
+import devinc.dits.entity.Test;
 import devinc.dits.entity.Topic;
 import devinc.dits.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,7 @@ public class StartController {
         this.topicService = topicService;
     }
 
-    @RequestMapping(value = "/chooseTest", method = RequestMethod.GET) // получение формы
-    public ModelAndView chooseTest() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("User/userChoose");
-        List<Topic> topics = topicService.findAll();
-        modelAndView.addObject("topics", topics);
-        return modelAndView;
-    }
+
 
     @GetMapping(value = "/personalStatistic")
     public String personalStatisticPage() {

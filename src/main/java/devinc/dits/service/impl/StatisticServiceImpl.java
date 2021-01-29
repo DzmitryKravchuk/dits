@@ -1,7 +1,10 @@
 package devinc.dits.service.impl;
 
 import devinc.dits.entity.Statistic;
+import devinc.dits.entity.User;
+import devinc.dits.repository.QuestionRepository;
 import devinc.dits.repository.StatisticRepository;
+import devinc.dits.repository.UserRepository;
 import devinc.dits.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,23 @@ public class StatisticServiceImpl implements StatisticService {
 
     StatisticRepository repository;
 
+    UserRepository userRepository;
+
+    QuestionRepository questionRepository;
+
+    @Autowired
+    public void setQuestionRepository(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
+
     @Autowired
     public void setRepository(StatisticRepository repository) {
         this.repository = repository;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Transactional

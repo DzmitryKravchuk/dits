@@ -47,4 +47,10 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer getById(int id) {
         return repository.getById(Answer.class,id);
     }
+
+    @Transactional
+    @Override
+    public Answer getByDescription(String chosenAnswer) {
+        return repository.getByDescription(chosenAnswer);
+    }
 }

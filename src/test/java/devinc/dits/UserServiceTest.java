@@ -4,6 +4,7 @@ import devinc.dits.config.HibernateConfig;
 import devinc.dits.config.WebConfig;
 import devinc.dits.entity.Role;
 import devinc.dits.entity.User;
+import devinc.dits.repository.UserRepository;
 import devinc.dits.service.RoleService;
 import devinc.dits.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,20 +62,14 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         Role roleFromBase1 = roleService.getRoleByName("admin");
         Role roleFromBase2 = roleService.getById(1);
-        assert(roleFromBase1.equals(roleFromBase2));
+        assert (roleFromBase1.equals(roleFromBase2));
 
 
         List<User> list = userService.findAll(); // findAll
         int list1Size = list.size();
 
-        for (User t : list
-        ) {
-            if (t.getPassword().equals(q.getPassword())) {
-                q.setUserId((t.getUserId()));
-            }
-        }
-
-        qFromBase = userService.getById(q.getUserId()); //get
+        //qFromBase = userService.getById(q.getUserId()); //get
+        qFromBase = userService.getByLogin("Login");
         assert (q.equals(qFromBase));
 
         q.setFirstName("new name");

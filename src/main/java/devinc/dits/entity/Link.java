@@ -13,8 +13,8 @@ public class Link {
     @Column
     private String link;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "literatureId")
+    @OneToOne
+    @JoinColumn(name = "literatureId", updatable = false)
     Literature literature;
 
     @Override

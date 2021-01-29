@@ -109,18 +109,18 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 INSERT INTO `user`
-VALUES (1, 'Кащей', 'Бессмертный', 'login1', 'pass1'),
-       (2, 'Василиса', 'Премудрая', 'login2', 'pass2'),
-       (3, 'Иван', 'Дурак', 'login3', 'pass3');
+VALUES (1, 'Василий', 'Теркин', 'admin', '$2a$10$fe/bp6YbQ36czsAiL01qHOnxQRLbPUlgyQqJ4DHCwZ6.jxZzZQUCy'),
+       (2, 'Евгений', 'Онегин', 'tutor', '$2a$10$vLBocq7lXsPKhv/0GIGLA.pCICtGYrzHOFP6ExaxmQuUV9zJmhyuS'),
+       (3, 'Василиса', 'Премудрая', 'user1', '$2a$10$bvs5FwXrBwvwpEEGYxLwouhf3eOvs.2GpKJj8M2uFPNqFcFNcyM8G'),
+       (4, 'Иван', 'Дурак', 'user', '$2a$10$xoxO6lYd6vRBRJZCQ9VKDOfJYW0g7jECnLRbexp8CXVAtWVPEe8Ma');
 UNLOCK TABLES;
 
 LOCK TABLES `user_2_role` WRITE;
 INSERT INTO `user_2_role`
 VALUES (1, 1),
-       (2, 1),
        (2, 2),
-       (3, 2),
-       (3, 3);
+       (3, 3),
+       (3, 4);
 UNLOCK TABLES;
 
 LOCK TABLES `question` WRITE;

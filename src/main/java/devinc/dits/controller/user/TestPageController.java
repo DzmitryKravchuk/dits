@@ -1,7 +1,9 @@
 package devinc.dits.controller.user;
 
+import devinc.dits.entity.Answer;
 import devinc.dits.entity.Question;
 import devinc.dits.entity.Statistic;
+import devinc.dits.entity.User;
 import devinc.dits.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,9 @@ public class TestPageController {
     AnswerService answerService;
 
     StatisticService statisticService;
+
+    @Autowired
+    ResultPageController resultController;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -50,10 +57,10 @@ public class TestPageController {
         this.statisticService = statisticService;
     }
 
-    private static List<Question> questionList;
+    private static List<Question> questionList = new ArrayList<>();
     private static int max;
     private static int counter;
-    private static Map<String, Statistic> statList = new LinkedHashMap<>();
+    private static List<Statistic> statList = new ArrayList<>();
 
     @GetMapping(value = "/goTest")
     public String goTest(@RequestParam String testName, ModelMap modelMap) {
@@ -68,24 +75,32 @@ public class TestPageController {
     }
 
     @GetMapping(value = "/nextTestPage")
-    public String nextTestPage1(@RequestParam(value = "chosenAns") String chosenAnswer, ModelMap modelMap) {
+    public String nextTestPage1(@RequestParam(value = "chosenAns") int chosenAnswer, ModelMap modelMap) {
+        Question previousQ = questionList.get(counter - 1);
+        previousQ = questionService.getFullInfoById(previousQ.getQuestionId());
         if (counter < max) {
-            statList.put(questionList.get(counter - 1).getDescription(),configureStatistic(chosenAnswer));
-            modelMap.addAttribute("question", questionList.get(counter).getDescription());
+            Question actualQ = questionList.get(counter);
+            statList.add(configureStatistic(chosenAnswer, previousQ));
+            modelMap.addAttribute("question", actualQ.getDescription());
             modelMap.addAttribute("answers",
-                    questionService.getAnswersByQuestion(questionList.get(counter).getQuestionId()));
+                    questionService.getAnswersByQuestion(actualQ.getQuestionId()));
             counter++;
             return "User/testPage";
         } else
-            return resultPageFill(chosenAnswer, modelMap);
+            statList.add(configureStatistic(chosenAnswer, previousQ));
+        return resultController.resultPage(statList, modelMap);
     }
 
-    private String resultPageFill(String chosenAnswer, ModelMap modelMap) {
-        return  null;
-    }
-
-    private Statistic configureStatistic(String chosenAnswer) {
-        return null;
+    private Statistic configureStatistic(int chosenAnswer, Question question) {
+        User user = userService.getLoggedUser();
+        Answer ans = answerService.getById(chosenAnswer);
+        Statistic newStatistic = new Statistic();
+        newStatistic.setQuestion(question);
+        newStatistic.setCorrect(ans.getCorrect());
+        newStatistic.setUser(user);
+        newStatistic.setDate(LocalDate.now());
+        statisticService.save(newStatistic);
+        return newStatistic;
     }
 }
 

@@ -19,5 +19,9 @@ public interface QuestionService {
 
     List<Answer> getAnswersByQuestion(int questionId);
 
-    Question createQuestionByDescription (String questionName, Test test);
+    Question createQuestionByDescription(String questionName, Test test);
+
+    Question getQuestionByDescription(String questionDescription);
+
+    Question getFullInfoById(int id);
 }

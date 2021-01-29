@@ -74,4 +74,16 @@ public class QuestionServiceImpl implements QuestionService {
 
         return newQuestion;
     }
+
+    @Transactional
+    @Override
+    public Question getQuestionByDescription(String questionDescription) {
+        return repository.getQuestionByDescription(questionDescription);
+    }
+
+    @Transactional
+    @Override
+    public Question getFullInfoById(int id) {
+        return repository.getFullInfoById(id);
+    }
 }

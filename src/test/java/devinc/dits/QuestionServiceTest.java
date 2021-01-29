@@ -3,6 +3,7 @@ package devinc.dits;
 import devinc.dits.config.HibernateConfig;
 import devinc.dits.config.WebConfig;
 import devinc.dits.entity.Answer;
+import devinc.dits.entity.Literature;
 import devinc.dits.entity.Question;
 import devinc.dits.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,6 @@ public class QuestionServiceTest extends AbstractTestNGSpringContextTests {
 
         q = questionService.createQuestionByDescription(questionName, test);
 
-        questionService.save(q);  // save
-
         List<Question> list = questionService.findAll(); // findAll
         int list1Size = list.size();
 
@@ -51,7 +50,7 @@ public class QuestionServiceTest extends AbstractTestNGSpringContextTests {
 
         q.setDescription("new_desc");
         questionService.update(q); //update
-        qFromBase = questionService.getById(q.getQuestionId()); //get2
+        qFromBase = questionService.getQuestionByDescription("new_desc"); //get2
         assert (q.equals(qFromBase));
 
         questionService.delete(q);
@@ -61,5 +60,12 @@ public class QuestionServiceTest extends AbstractTestNGSpringContextTests {
 
         List<Answer> listA = questionService.getAnswersByQuestion(1);
         System.out.println(listA);
+
+        System.out.println("Достаем полную информацию о вопросе");
+        q = questionService.getFullInfoById(1);
+        System.out.println(q);
+
+        for(Literature lit : q.getLiteratureSet())
+        System.out.printf("название - %s : источник - %s",lit, lit.getLink());
     }
 }

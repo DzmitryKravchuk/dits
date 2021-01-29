@@ -13,6 +13,9 @@ public class Literature {
     @Column
     private String description;
 
+    @OneToOne(mappedBy = "literature", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Link link;
+
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "questionId")
     Question question;
@@ -61,5 +64,13 @@ public class Literature {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 }

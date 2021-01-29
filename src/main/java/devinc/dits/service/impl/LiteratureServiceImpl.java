@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class LiteratureServiceImpl implements LiteratureService {
@@ -46,5 +47,11 @@ public class LiteratureServiceImpl implements LiteratureService {
     @Override
     public Literature getById(int id) {
         return repository.getById(Literature.class, id);
+    }
+
+    @Transactional
+    @Override
+    public Set<Literature> getByQuestionId(int questionID) {
+        return repository.getByQuestionId(questionID);
     }
 }

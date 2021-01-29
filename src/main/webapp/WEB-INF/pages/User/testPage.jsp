@@ -11,7 +11,7 @@
     <div>${question}</div>
     <br>
     <c:forEach items="${answers}" var="answer">
-        <input type="radio" name="chosenAns" value="${answer}">${answer.description}<br>
+        <input type="radio" name="chosenAns" value="${answer.answerId}">${answer.description}<br>
     </c:forEach>
     <br>
     <input type="submit" value="Следующий">

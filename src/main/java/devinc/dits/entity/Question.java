@@ -2,6 +2,7 @@ package devinc.dits.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Question {
@@ -16,6 +17,9 @@ public class Question {
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "testId")
     Test test;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Literature> literatureSet;
 
     @Override
     public String toString() {
@@ -61,5 +65,13 @@ public class Question {
 
     public void setTest(Test test) {
         this.test = test;
+    }
+
+    public Set<Literature> getLiteratureSet() {
+        return literatureSet;
+    }
+
+    public void setLiteratureSet(Set<Literature> literatureSet) {
+        this.literatureSet = literatureSet;
     }
 }
