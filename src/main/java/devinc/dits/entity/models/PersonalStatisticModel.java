@@ -1,4 +1,4 @@
-package devinc.dits.entity;
+package devinc.dits.entity.models;
 
 public class PersonalStatisticModel {
     String userName;

@@ -67,5 +67,7 @@ public class TestServiceTest extends AbstractTestNGSpringContextTests {
 
         List<Question> listQ = testService.getQuestionsByTest("Java core test");
         System.out.println(listQ);
+
+        System.out.println("Статистика прохождения тестов - "+testService.getTestStatisticList());
     }
 }

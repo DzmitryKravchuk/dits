@@ -111,7 +111,7 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user`
 VALUES (1, 'Василий', 'Теркин', 'admin', '$2a$10$fe/bp6YbQ36czsAiL01qHOnxQRLbPUlgyQqJ4DHCwZ6.jxZzZQUCy'),
        (2, 'Евгений', 'Онегин', 'tutor', '$2a$10$vLBocq7lXsPKhv/0GIGLA.pCICtGYrzHOFP6ExaxmQuUV9zJmhyuS'),
-       (3, 'Василиса', 'Премудрая', 'user1', '$2a$10$bvs5FwXrBwvwpEEGYxLwouhf3eOvs.2GpKJj8M2uFPNqFcFNcyM8G'),
+       (3, 'Василиса', 'Премудрая', 'user1', '$2a$10$e52Pl30a4F1ek3iwq6xCBecKC.RT65V/orAfp1Wlx8BaZcxWVRX9W'),
        (4, 'Иван', 'Дурак', 'user', '$2a$10$xoxO6lYd6vRBRJZCQ9VKDOfJYW0g7jECnLRbexp8CXVAtWVPEe8Ma');
 UNLOCK TABLES;
 
@@ -163,3 +163,18 @@ VALUES (1, 'https://docs.google.com/document/linc1', '1'),
        (4, 'https://docs.google.com/document/linc4', '4');
 UNLOCK TABLES;
 
+LOCK TABLES `statistic` WRITE;
+INSERT INTO `statistic`
+VALUES (1, '2021-01-26', '0', '1', '4'),
+       (2, '2021-01-26', '1', '1', '4'),
+       (3, '2021-01-26', '1', '1', '4'),
+       (4, '2021-01-26', '1', '1', '3'),
+       (5, '2021-01-26', '0', '2', '4'),
+       (6, '2021-01-26', '0', '2', '4'),
+       (7, '2021-01-26', '0', '2', '4'),
+       (8, '2021-01-26', '1', '2', '3'),
+       (9, '2021-01-26', '0', '3', '4'),
+       (10, '2021-01-26', '0', '4', '4'),
+       (11, '2021-01-26', '1', '3', '3'),
+       (12, '2021-01-26', '1', '4', '3');
+UNLOCK TABLES;

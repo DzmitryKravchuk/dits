@@ -35,7 +35,9 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         for (GrantedAuthority a : authorities) {
             roles.add(a.getAuthority());
         }
-        if (isTutor(roles)) {
+        if (isTutor(roles) & isAdmin(roles) || isTutor(roles) & isUser(roles) || isAdmin(roles) & isUser(roles)) {
+            url = "/userRoleResolver";
+        }else if (isTutor(roles)) {
             url = "/tutor";
         } else if (isAdmin(roles)) {
             url = "/admin";
@@ -46,21 +48,21 @@ public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     }
 
     private boolean isUser(List<String> roles) {
-        if (roles.contains("ROLE_USER")) {
+        if (roles.contains("user")) {
             return true;
         }
         return false;
     }
 
     private boolean isAdmin(List<String> roles) {
-        if (roles.contains("ROLE_ADMIN")) {
+        if (roles.contains("admin")) {
             return true;
         }
         return false;
     }
 
     private boolean isTutor(List<String> roles) {
-        if (roles.contains("ROLE_TUTOR")) {
+        if (roles.contains("tutor")) {
             return true;
         }
         return false;

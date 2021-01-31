@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -16,20 +17,16 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
     private SuccessHandler successHandler;
 
-    private UserService userService;
+    @Autowired
+    private FailureHandler failureHandler;
 
     @Autowired
-    public void setSuccessHandler(SuccessHandler customSuccessHandler) {
-        this.successHandler = customSuccessHandler;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,47 +36,41 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return  userDetailsService();
-    }
-
-    @Autowired
-    DataSource dataSource;
-
 //    @Autowired
-//    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService)
-//                .passwordEncoder(passwordEncoder);
-//    }
+    //   DataSource dataSource;
 
-    //////////////////логин и пароль записаны вручную для тестирования
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-       auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-               .withUser("user").password(passwordEncoder.encode("user")).roles("USER").
-                and()
-                .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").
-                and()
-                .withUser("tutor").password(passwordEncoder.encode("tutor")).roles("TUTOR");
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
+
+    //////////////////логин и пароль записаны вручную для тестирования
+//    @Autowired
+    //   public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+    //      auth.inMemoryAuthentication()
+    //              .passwordEncoder(passwordEncoder)
+    //             .withUser("user").password(passwordEncoder.encode("user")).roles("USER").
+    //               and()
+    //               .withUser("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").
+    //               and()
+    //               .withUser("tutor").password(passwordEncoder.encode("tutor")).roles("TUTOR");
+    //   }
     /////////////////
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/**").access("hasRole('USER')")
-                .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/tutor/**").access("hasRole('TUTOR')")
+                .antMatchers("/admin/**").hasAuthority("admin")
+                .antMatchers("/user/**").hasAuthority("user")
+                .antMatchers("/tutor/**").hasAuthority("tutor")
                 .antMatchers("/resources/**").permitAll()
                 .anyRequest().permitAll();
 //
         http.formLogin()
                 .loginPage("/login")
                 .successHandler(successHandler)
-         //       .failureHandler(authFailureHandler)
-                .usernameParameter("username").passwordParameter("password")
+                .failureHandler(failureHandler)
                 .usernameParameter("username").passwordParameter("password")
                 .and().csrf().disable();
 //

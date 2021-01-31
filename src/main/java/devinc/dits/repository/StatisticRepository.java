@@ -8,15 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Repository
 public class StatisticRepository implements DaoRepos<Statistic> {
-    public static final String SQL_SELECT_STATISTIC_QUESTION_TEST_BY_USER_ID = "SELECT stat.statisticId, date, correct, user.userId, user.firstName, lastName, login, q.questionId, q.description as questionDesc, test.testId, test.name, test.description as testDesc, test.topicId FROM statistic stat, user user, question q, test test WHERE stat.userId =? and stat.questionId=q.questionId and user.userId=stat.userId and q.testId=test.testId order by test.testId";
+    private static final String SQL_SELECT_STATISTIC_QUESTION_TEST_BY_USER_ID = "SELECT stat.statisticId, date, correct, user.userId, user.firstName, lastName, login, q.questionId, q.description as questionDesc, test.testId, test.name, test.description as testDesc, test.topicId FROM statistic stat, user user, question q, test test WHERE stat.userId =? and stat.questionId=q.questionId and user.userId=stat.userId and q.testId=test.testId order by test.testId";
 
     private SessionFactory sessionFactory;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -70,4 +78,33 @@ public class StatisticRepository implements DaoRepos<Statistic> {
         return statList;
     }
 
+    public Set<Test> getTestsPassedByUserId(int userId) {
+        List<Statistic> statList = getByUserId(userId);
+        Set<Test> testSet = new HashSet<>();
+        for (Statistic st : statList) {
+            testSet.add(st.getQuestion().getTest());
+        }
+        return testSet;
+    }
+
+    public Integer getTotalUserPassedTestCount(int userId, int testId) {
+        List<Statistic> statList = getByUserId(userId);
+        List<Statistic> statList4Test = statList.stream().filter(st -> st.getQuestion().getTest().getTestId() == testId).collect(Collectors.toList());
+        int testQuestionCount = questionRepository.getQuestionsByTestId(testId).size();
+        int totalPassedTestCount = statList4Test.size() / testQuestionCount;
+
+        return new Integer(totalPassedTestCount);
+    }
+
+    public Double getCorrectAnswersUserPassedTestRate(int userId, int testId) {
+        List<Statistic> statList = getByUserId(userId);
+        Predicate<Statistic> isCorrect = stat -> stat.isCorrect() == true;
+        Predicate<Statistic> hasTestId = stat -> stat.getQuestion().getTest().getTestId() == testId;
+        int totalPassedQuestionCount = statList.stream().filter(hasTestId).collect(Collectors.toList())
+                .size();
+        int correctPassedQuestionCount = statList.stream().filter(hasTestId.and(isCorrect)).collect(Collectors.toList())
+                .size();
+        double correctAnswersUserPassedTestRate =(double) correctPassedQuestionCount/ (double) totalPassedQuestionCount*100;
+        return new Double(correctAnswersUserPassedTestRate);
+    }
 }

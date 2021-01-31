@@ -23,18 +23,33 @@ public class HomeController {
         model.addAttribute("user", getPrincipal());
         return "Admin/admin";
     }
+    @GetMapping(value="/goHomeAdmin")
+    public String goHomeAdmin(){
+        return "Admin/admin";
+    }
+
 
     @GetMapping(value = "/user")
     public String userPage(ModelMap model) {
         model.addAttribute("user", getPrincipal());
         return "User/user";
     }
+    @GetMapping(value = "/goHome")
+    public String goHome() {
+        return "User/user";
+    }
+
 
     @GetMapping(value = "/tutor")
     public String tutorPage(ModelMap model) {
         model.addAttribute("user", getPrincipal());
         return "Tutor/tutor";
     }
+    @GetMapping(value = "/goHomeTutor")
+    public String goHomeTutor() {
+        return "Tutor/tutor";
+    }
+
 
     @GetMapping(value = "/login")
     public String loginPage() {
@@ -55,16 +70,29 @@ public class HomeController {
         return "redirect:/login?logout";
     }
 
-    private String getPrincipal() {
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
+    @GetMapping("/userRoleResolver")
+    public String userRoleResolverPage(ModelMap model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        List<String> roles = new ArrayList<>();
+        for(GrantedAuthority a : authorities){
+            roles.add(a.getAuthority());
         }
-        return userName;
+
+        model.addAttribute("roles", roles);
+
+        return "userRoleResolver";
     }
 
-
+    private String getPrincipal() {
+        String userName = null;
+       Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+       } else {
+            userName = principal.toString();
+        }
+       return userName;
+    }
 }

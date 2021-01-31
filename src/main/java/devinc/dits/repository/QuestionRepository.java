@@ -14,6 +14,7 @@ import java.util.Set;
 @Repository
 public class QuestionRepository implements DaoRepos<Question> {
     public static final String SQL_SELECT_QUESTION_LITERATURE_BY_ID = "SELECT q.questionId, q.description as qdescription, testId, lit.literatureId, lit.description as litdescription, link.linkId, link FROM question q, literature lit, link link WHERE q.questionId=? and q.questionId=lit.questionId and lit.literatureId=link.literatureId";
+    public static final String SQL_SELECT_QUESTION_STATISTIC_BY_ID = "SELECT stat.statisticId, correct, q.questionId, q.description FROM question q, statistic stat WHERE q.questionId=? and q.questionId=stat.questionId";
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -72,4 +73,37 @@ public class QuestionRepository implements DaoRepos<Question> {
         return question;
     }
 
+    public Integer getTotalAnsweredQuestionCount(int questionId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createNativeQuery(SQL_SELECT_QUESTION_STATISTIC_BY_ID);
+        q.setParameter(1, questionId);
+        List<Object[]> qResultList = q.getResultList();
+
+        return new Integer(qResultList.size());
+    }
+
+    public Double getCorrectAnswersByQuestionRate(int questionId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query q = session.createNativeQuery(SQL_SELECT_QUESTION_STATISTIC_BY_ID);
+        q.setParameter(1, questionId);
+        List<Object[]> qResultList = q.getResultList();
+        Integer totalAnswersCount = new Integer(qResultList.size());
+        Integer correctAnswersCount = null;
+        int c = 0;
+        for (Object[] a : qResultList) {
+            if ((boolean) a[1] == true) {
+                c++;
+            }
+        }
+        correctAnswersCount = new Integer(c);
+        double d =correctAnswersCount.doubleValue()/totalAnswersCount.doubleValue()*100;
+        return new Double(d);
+    }
+
+    public List<Question> getQuestionsByTestId(int testId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Question where test.testId = :param");
+        query.setParameter("param", testId);
+        return query.list();
+    }
 }

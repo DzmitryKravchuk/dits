@@ -3,12 +3,14 @@ package devinc.dits.service.impl;
 import devinc.dits.entity.Answer;
 import devinc.dits.entity.Question;
 import devinc.dits.entity.Test;
+import devinc.dits.entity.models.QuestionStatistic;
 import devinc.dits.repository.QuestionRepository;
 import devinc.dits.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -85,6 +87,20 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getFullInfoById(int id) {
         return repository.getFullInfoById(id);
+    }
+
+    @Transactional
+    @Override
+    public List<QuestionStatistic> getQuestionStatisticList() {
+        List<QuestionStatistic> questionStatisticList = new ArrayList<>();
+        List<Question> questionList = repository.findAll(Question.class);
+        questionList.forEach(q -> questionStatisticList.add(new QuestionStatistic(
+                q.getQuestionId(),
+                q.getDescription(),
+                repository.getTotalAnsweredQuestionCount(q.getQuestionId()),
+                repository.getCorrectAnswersByQuestionRate(q.getQuestionId()))));
+
+        return questionStatisticList;
     }
 
 }

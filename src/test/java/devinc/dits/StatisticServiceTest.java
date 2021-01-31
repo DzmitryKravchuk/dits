@@ -83,5 +83,7 @@ public class StatisticServiceTest extends AbstractTestNGSpringContextTests {
             System.out.println(".........................");
             i++;
         }
+
+        System.out.println("Статистика пройденных тестов каждым юзером: "+statisticService.getAllUserStatistic());
     }
 }

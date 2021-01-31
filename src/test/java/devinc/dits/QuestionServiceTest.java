@@ -5,6 +5,7 @@ import devinc.dits.config.WebConfig;
 import devinc.dits.entity.Answer;
 import devinc.dits.entity.Literature;
 import devinc.dits.entity.Question;
+import devinc.dits.repository.QuestionRepository;
 import devinc.dits.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -67,5 +68,8 @@ public class QuestionServiceTest extends AbstractTestNGSpringContextTests {
 
         for(Literature lit : q.getLiteratureSet())
         System.out.printf("название - %s : источник - %s",lit, lit.getLink());
+
+        System.out.println("Статистика по вопросам - "+questionService.getQuestionStatisticList());
+
     }
 }

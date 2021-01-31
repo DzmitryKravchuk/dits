@@ -3,6 +3,7 @@ package devinc.dits.service;
 import devinc.dits.entity.Answer;
 import devinc.dits.entity.Question;
 import devinc.dits.entity.Test;
+import devinc.dits.entity.models.QuestionStatistic;
 
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface QuestionService {
     Question getQuestionByDescription(String questionDescription);
 
     Question getFullInfoById(int id);
+
+    List<QuestionStatistic> getQuestionStatisticList();
 
 }

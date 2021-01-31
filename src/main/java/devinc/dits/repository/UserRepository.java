@@ -1,6 +1,7 @@
 package devinc.dits.repository;
 
 import devinc.dits.entity.Role;
+import devinc.dits.entity.Test;
 import devinc.dits.entity.Topic;
 import devinc.dits.entity.User;
 import org.hibernate.Session;

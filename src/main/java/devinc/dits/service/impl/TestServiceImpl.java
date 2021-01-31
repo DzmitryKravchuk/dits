@@ -3,12 +3,14 @@ package devinc.dits.service.impl;
 import devinc.dits.entity.Question;
 import devinc.dits.entity.Test;
 import devinc.dits.entity.Topic;
+import devinc.dits.entity.models.TestStatistic;
 import devinc.dits.repository.TestRepository;
 import devinc.dits.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -76,5 +78,21 @@ public class TestServiceImpl implements TestService {
         save(newTest);
 
         return newTest;
+    }
+
+    @Transactional
+    @Override
+    public List<TestStatistic> getTestStatisticList() {
+        List<TestStatistic> testStatisticList = new ArrayList<>();
+        List<Test> testList = repository.findAll(Test.class);
+
+        testList.forEach(t -> testStatisticList.add(new TestStatistic(
+                t.getTestId(),
+                t.getName(),
+                repository.getTotalTestPassedCount(t.getTestId()),
+                repository.getCorrectAnswersByTestRate(t.getTestId())
+        )));
+
+        return testStatisticList;
     }
 }

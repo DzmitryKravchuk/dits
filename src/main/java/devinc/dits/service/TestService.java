@@ -3,6 +3,7 @@ package devinc.dits.service;
 import devinc.dits.entity.Question;
 import devinc.dits.entity.Test;
 import devinc.dits.entity.Topic;
+import devinc.dits.entity.models.TestStatistic;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface TestService {
     List<Question> getQuestionsByTest(String testName);
 
     Test createTestByName (String testName, Topic topic);
+
+    List<TestStatistic> getTestStatisticList();
 }

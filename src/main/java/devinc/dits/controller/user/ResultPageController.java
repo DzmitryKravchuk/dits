@@ -23,11 +23,6 @@ public class ResultPageController {
     @Autowired
     LiteratureService literatureService;
 
-    @GetMapping(value = "/goHome")
-    public String goHome() {
-        return "User/user";
-    }
-
     @GetMapping(value = "/result")
     public String resultPage(List<Statistic> statList, ModelMap modelMap) {
         modelMap.addAttribute("statistic", statList);

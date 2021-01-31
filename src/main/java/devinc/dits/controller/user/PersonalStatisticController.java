@@ -1,7 +1,7 @@
 package devinc.dits.controller.user;
 
 
-import devinc.dits.entity.PersonalStatisticModel;
+import devinc.dits.entity.models.PersonalStatisticModel;
 import devinc.dits.entity.Question;
 import devinc.dits.entity.Statistic;
 import devinc.dits.entity.User;
