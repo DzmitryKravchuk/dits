@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>Test Result Page</title>
+    <link href="<c:url value="/resources/mystyle.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <table>

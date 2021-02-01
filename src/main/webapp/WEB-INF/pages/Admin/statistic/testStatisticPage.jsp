@@ -3,7 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>testStatisticPage</title>
+    <title>Test Statistic Page</title>
+    <link href="<c:url value="/resources/mystyle.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div>

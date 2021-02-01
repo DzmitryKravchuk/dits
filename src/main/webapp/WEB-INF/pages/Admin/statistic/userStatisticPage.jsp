@@ -3,11 +3,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>userStatisticPage</title>
+    <title>User Statistic Page</title>
+    <link href="<c:url value="/resources/mystyle.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div>
-    <table class="steelBlueCols">
+    <table>
         <tr>
             <th>Имя пользователя</th>
             <th>Название теста</th>

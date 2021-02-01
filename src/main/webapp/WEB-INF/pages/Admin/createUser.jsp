@@ -4,10 +4,11 @@
 
 <html>
 <head>
-    <title>CreateUser</title>
+    <title>Create User</title>
+    <link href="<c:url value="/resources/mystyle.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="CreateUser">
+<div class="mycont">
     <form:form method="post" action="/createUser" modelAttribute="user">
 
         <c:forEach items="${roles}" var="role">
@@ -21,18 +22,18 @@
             <tr>
                 <td><form:input path="firstName" placeholder="Имя" required="true"/></td>
             </tr>
-            <tr>
+            <!--tr>
                 <td><input placeholder="Отчество"/></td>
-            </tr>
+            </tr-->
             <tr>
                 <td><form:input path="password" placeholder="Пароль" required="true"/></td>
             </tr>
             <tr>
                 <td><form:input path="login" placeholder="Логин" required="true"/></td>
             </tr>
-            <tr>
+            <!--tr>
                 <td><input placeholder="Почта"/></td>
-            </tr>
+            </tr-->
             <tr>
                 <td><input type="submit" value="Сохранить пользователя"/></td>
             </tr>
@@ -45,8 +46,10 @@
     }, 4000)
 </script>
 <br>
-<form action="/goHomeAdmin">
-    <input type="submit" value="Назад">
-</form>
+<div class="mycont">
+    <form action="/goHomeAdmin">
+        <input type="submit" value="Назад">
+    </form>
+</div>
 </body>
 </html>

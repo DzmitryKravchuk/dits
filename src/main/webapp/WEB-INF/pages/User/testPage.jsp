@@ -5,17 +5,22 @@
 <html>
 <head>
     <title>Test page</title>
+    <link href="<c:url value="/resources/mystyle.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<form action="/nextTestPage" method="get">
-    <div>${question}</div>
-    <br>
-    <c:forEach items="${answers}" var="answer">
-        <input type="radio" name="chosenAns" value="${answer.answerId}">${answer.description}<br>
-    </c:forEach>
-    <br>
-    <input type="submit" value="Следующий">
-</form>
-<a href="<c:url value="/logout" />">Выйти</a>
+    <form action="/nextTestPage" method="get">
+        <div class="mycont">
+            <h3>${question}</h3>
+        </div>
+        <br>
+        <c:forEach items="${answers}" var="answer">
+            <input type="radio" class="choose" name="chosenAns" value="${answer.answerId}">${answer.description}<br>
+        </c:forEach>
+        <br>
+        <div class="mycont">
+        <input type="submit" value="Следующий">
+        </div>
+    </form>
+
 </body>
 </html>
