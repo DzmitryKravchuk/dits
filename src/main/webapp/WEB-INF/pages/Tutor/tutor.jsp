@@ -9,6 +9,8 @@
 <div class="mycont">
     <a href="<c:url value="/logout"/>">выйти</a>
     <h1>Hello ${user}</h1>
+
+    <a href="<c:url value="/testOptions"/>">Выбор теста</a><br>
 </div>
 </body>
 </html>

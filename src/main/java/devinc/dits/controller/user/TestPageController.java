@@ -64,6 +64,7 @@ public class TestPageController {
 
     @GetMapping(value = "/goTest")
     public String goTest(@RequestParam String testName, ModelMap modelMap) {
+        statList.clear();
         questionList = testService.getQuestionsByTest(testName);
         max = questionList.size();
         counter = 0;

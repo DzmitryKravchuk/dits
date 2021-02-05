@@ -15,29 +15,14 @@
             <input type="checkbox" name="chosenRole" value="${role.name}">${role.name}<br>
         </c:forEach>
 
-        <table>
-            <tr>
-                <td><form:input path="lastName" placeholder="Фамилия" required="true"/></td>
-            </tr>
-            <tr>
-                <td><form:input path="firstName" placeholder="Имя" required="true"/></td>
-            </tr>
-            <!--tr>
-                <td><input placeholder="Отчество"/></td>
-            </tr-->
-            <tr>
-                <td><form:input path="password" placeholder="Пароль" required="true"/></td>
-            </tr>
-            <tr>
-                <td><form:input path="login" placeholder="Логин" required="true"/></td>
-            </tr>
-            <!--tr>
-                <td><input placeholder="Почта"/></td>
-            </tr-->
-            <tr>
-                <td><input type="submit" value="Сохранить пользователя"/></td>
-            </tr>
-        </table>
+        <form:input path="lastName" placeholder="Фамилия" required="true"/><br>
+        <form:input path="firstName" placeholder="Имя" required="true"/><br>
+
+        <!--input placeholder="Отчество"/><br-->
+        <form:input path="password" placeholder="Пароль" required="true"/><br>
+        <form:input path="login" placeholder="Логин" required="true"/><br>
+        <!--input placeholder="Почта"/><br-->
+        <input type="submit" value="Сохранить пользователя"/>
     </form:form>
 </div>
 <script>

@@ -21,6 +21,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Literature> literatureSet;
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Answer> answerSet;
+
     @Override
     public String toString() {
         return "Question{" +
@@ -73,5 +76,13 @@ public class Question {
 
     public void setLiteratureSet(Set<Literature> literatureSet) {
         this.literatureSet = literatureSet;
+    }
+
+    public Set<Answer> getAnswerSet() {
+        return answerSet;
+    }
+
+    public void setAnswerSet(Set<Answer> answerSet) {
+        this.answerSet = answerSet;
     }
 }

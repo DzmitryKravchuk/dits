@@ -14,6 +14,7 @@ import java.util.Set;
 @Repository
 public class QuestionRepository implements DaoRepos<Question> {
     public static final String SQL_SELECT_QUESTION_LITERATURE_BY_ID = "SELECT q.questionId, q.description as qdescription, testId, lit.literatureId, lit.description as litdescription, link.linkId, link FROM question q, literature lit, link link WHERE q.questionId=? and q.questionId=lit.questionId and lit.literatureId=link.literatureId";
+    public static final String SQL_SELECT_QUESTION_LITERATURE_ANSWER_BY_ID = "SELECT question.questionId, question.description as qdesc, question.testId, literature.literatureId, literature.description as ldesc, l.linkId, l.link, a.answerId, a.description as adesc, a.correct FROM question LEFT JOIN literature ON question.questionId = literature.questionId LEFT JOIN answer a ON question.questionId = a.questionId LEFT JOIN link l ON literature.literatureId = l.literatureId WHERE question.questionId=?";
     public static final String SQL_SELECT_QUESTION_STATISTIC_BY_ID = "SELECT stat.statisticId, correct, q.questionId, q.description FROM question q, statistic stat WHERE q.questionId=? and q.questionId=stat.questionId";
     private SessionFactory sessionFactory;
 
@@ -45,8 +46,9 @@ public class QuestionRepository implements DaoRepos<Question> {
         Question question = new Question();
         question.setQuestionId(id);
         Set<Literature> literatureSet = new HashSet<>();
+        Set<Answer> answerSet = new HashSet<>();
         Session session = sessionFactory.getCurrentSession();
-        Query q = session.createNativeQuery(SQL_SELECT_QUESTION_LITERATURE_BY_ID);
+        Query q = session.createNativeQuery(SQL_SELECT_QUESTION_LITERATURE_ANSWER_BY_ID);
         q.setParameter(1, id);
         List<Object[]> qResultList = q.getResultList();
         for (Object[] a : qResultList) {
@@ -60,16 +62,35 @@ public class QuestionRepository implements DaoRepos<Question> {
             Link link = new Link();
             lit.setLink(link);
             lit.setQuestion(question);  //recursive
-            lit.setLiteratureId((int) a[3]);
-            lit.setDescription((String) a[4]);
             link.setLiterature(lit);  //recursive
-            link.setLinkId((int) a[5]);
-            link.setLink((String) a[6]);
 
-            literatureSet.add(lit);
+            if (a[3] != null) {
+                lit.setLiteratureId((int) a[3]);
+                lit.setDescription((String) a[4]);
+            }
+
+            if (a[5] != null) {
+                link.setLinkId((int) a[5]);
+                link.setLink((String) a[6]);
+                literatureSet.add(lit);
+            }
+
+
+
+            Answer answer = new Answer();
+            answer.setQuestion(question);   //recursive
+
+            if (a[7] != null) {
+                answer.setAnswerId((int) a[7]);
+                answer.setDescription((String) a[8]);
+                answer.setCorrect((boolean) a[9]);
+                answerSet.add(answer);
+            }
+
         }
-        question.setLiteratureSet(literatureSet);
 
+        question.setLiteratureSet(literatureSet);
+        question.setAnswerSet(answerSet);
         return question;
     }
 
@@ -96,7 +117,7 @@ public class QuestionRepository implements DaoRepos<Question> {
             }
         }
         correctAnswersCount = new Integer(c);
-        double d =correctAnswersCount.doubleValue()/totalAnswersCount.doubleValue()*100;
+        double d = correctAnswersCount.doubleValue() / totalAnswersCount.doubleValue() * 100;
         return new Double(d);
     }
 
