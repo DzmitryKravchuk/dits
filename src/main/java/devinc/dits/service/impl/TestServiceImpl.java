@@ -95,4 +95,10 @@ public class TestServiceImpl implements TestService {
 
         return testStatisticList;
     }
+
+    @Transactional
+    @Override
+    public Test getByName(String testName) {
+        return repository.getByTestName(testName);
+    }
 }

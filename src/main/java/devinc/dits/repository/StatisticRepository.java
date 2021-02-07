@@ -7,6 +7,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -105,6 +107,14 @@ public class StatisticRepository implements DaoRepos<Statistic> {
         int correctPassedQuestionCount = statList.stream().filter(hasTestId.and(isCorrect)).collect(Collectors.toList())
                 .size();
         double correctAnswersUserPassedTestRate =(double) correctPassedQuestionCount/ (double) totalPassedQuestionCount*100;
-        return new Double(correctAnswersUserPassedTestRate);
+        return new Double(round(correctAnswersUserPassedTestRate,1));
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

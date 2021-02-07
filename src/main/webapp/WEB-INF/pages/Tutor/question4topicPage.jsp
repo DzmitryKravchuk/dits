@@ -7,7 +7,15 @@
 </head>
 <body>
 <div class="mycont">
-    <h1>Edit topic: ${testName}</h1>
+    <h1>Edit test: ${testName}</h1>
+    <form action="/saveQuestion">
+        <input type="hidden" name="testName" value="${testName}">
+
+        <input type="text" required placeholder="Добавить новый вопрос" id="question" name="question">
+
+        <input type="submit" value="Отправить">
+    </form>
+
 
     <table>
         <tr>

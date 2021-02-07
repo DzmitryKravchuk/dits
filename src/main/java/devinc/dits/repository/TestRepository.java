@@ -8,6 +8,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Repository
@@ -64,6 +66,14 @@ public class TestRepository implements DaoRepos<Test> {
         }
         correctAnswersCount = new Integer(c);
         double d =correctAnswersCount.doubleValue()/totalAnswersCount.doubleValue()*100;
-        return new Double(d);
+        return new Double(round(d,1));
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

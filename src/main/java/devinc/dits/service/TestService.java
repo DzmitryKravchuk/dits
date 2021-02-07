@@ -23,4 +23,6 @@ public interface TestService {
     Test createTestByName (String testName, Topic topic);
 
     List<TestStatistic> getTestStatisticList();
+
+    Test getByName(String testName);
 }

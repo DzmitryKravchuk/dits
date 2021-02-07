@@ -41,21 +41,21 @@ public class CreateTestController {
         return "Admin/createTest";
     }
 
-    @GetMapping("/saveNewQuestion")
-    public String addTest(@RequestParam(name = "topic") String topicName, @RequestParam(name = "test") String testName, @RequestParam(name = "question") String questionName, Model model) {
-        Question completed = createNewQuestion(topicName, testName, questionName);
+    @GetMapping("/saveNewTest")
+    public String addTest(@RequestParam(name = "topic") String topicName, @RequestParam(name = "test") String testName, Model model) {
+        Test completed = createNewTest(topicName, testName);
         model.addAttribute("topics", topicService.findAll());
         model.addAttribute("tests", testService.findAll());
-        model.addAttribute("questions", questionService.findAll());
-        model.addAttribute("success", "Добавлен вопрос: " + completed.toString());
+
+        model.addAttribute("success", "Добавлен тест: " + completed.toString());
         return "Admin/createTest";
     }
 
-    private Question createNewQuestion(String topicName, String testName, String questionName) {
+    private Test createNewTest(String topicName, String testName) {
         Topic topic = topicService.createTopicByName(topicName);
         Test test = testService.createTestByName(testName, topic);
-        Question question = questionService.createQuestionByDescription(questionName, test);
-        return question;
+
+        return test;
     }
 
 

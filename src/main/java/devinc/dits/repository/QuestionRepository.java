@@ -7,6 +7,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -118,7 +120,7 @@ public class QuestionRepository implements DaoRepos<Question> {
         }
         correctAnswersCount = new Integer(c);
         double d = correctAnswersCount.doubleValue() / totalAnswersCount.doubleValue() * 100;
-        return new Double(d);
+        return new Double(round(d,1));
     }
 
     public List<Question> getQuestionsByTestId(int testId) {
@@ -126,5 +128,13 @@ public class QuestionRepository implements DaoRepos<Question> {
         Query query = session.createQuery("from Question where test.testId = :param");
         query.setParameter("param", testId);
         return query.list();
+    }
+
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

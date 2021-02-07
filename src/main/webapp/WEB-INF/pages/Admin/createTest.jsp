@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="mycont">
-    <form action="saveNewQuestion">
+    <form action="/saveNewTest">
         <p>
             <input type="text" required list="topics" placeholder="Выберите тему" id="topic" name="topic">
             <datalist id="topics" name="topicName">
@@ -26,15 +26,7 @@
                 </c:forEach>
             </datalist>
         </p>
-        <p>
-            <input type="text" required list="questions" placeholder="Выберите вопрос" id="question" name="question">
-            <%--  <input list="questions" required name ="questionName"--%>
-            <datalist id="questions">
-                <c:forEach items="${questions}" var="question">
-                    <option value="${question.description}"></option>
-                </c:forEach>
-            </datalist>
-        </p>
+
         <input type="submit" value="Отправить">
     </form>
 
